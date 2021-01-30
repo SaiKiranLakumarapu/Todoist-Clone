@@ -1,0 +1,40 @@
+<section class="task-list-content" [ngClass]="{ 'dark-theme': isDarkTheme | async }">
+  <mat-card class="card-container" *ngIf="this.tasks.length === 0">
+    <p class="tasks-completed-message">{{emptyTasksMessage}}</p>
+  </mat-card>
+  <mat-card *ngFor="let task of tasks" class="card-container">
+    <span class="created-time">
+      Created: {{task.createdTime | dateFormat}}
+    </span>
+    <mat-card-header>
+      <mat-card-title>
+        <p class="project-name">
+          <span *ngIf="!task.canEdit">{{task.project}}</span>
+          <input matInput class="task-edit-field" *ngIf="task.canEdit" [(ngModel)]="task.project" />
+        </p>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="task-description">
+        <span *ngIf="!task.canEdit">{{task.text}}</span>
+        <input matInput class="task-edit-field" *ngIf="task.canEdit"
+          [@fadeInAnimation]="task.canEdit ? 'true' : 'false'" [(ngModel)]="task.text" />
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-icon-button class="mat-primary task-buttons" type="submit" (click)="this.completeTask(task.id)"
+        [disabled]="task.canEdit">
+        <mat-icon [ngClass]="{ 'disabled' : task.canEdit }" class="material-icons">check</mat-icon>
+      </button>
+      <button mat-icon-button class="mat-primary task-buttons" type="submit" (click)="this.updateTask(task)">
+        <i class="material-icons">edit</i>
+      </button>
+      <button mat-icon-button class="mat-primary task-buttons" type="submit" (click)="this.deleteTask(task.id)">
+        <i class="material-icons">delete</i>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</section>
+<section>
+  <app-create-task [showTaskCreateForm]="this.showTaskCreate" (newTask)="addTask($event)"></app-create-task>
+</section>

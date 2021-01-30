@@ -1,0 +1,67 @@
+@import '../../styles/styles.scss';
+
+@mixin list-theme($theme) {
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .task-list-content {
+    background: mat-color($background);
+    color: $background-color;
+    margin-top: 1vw;
+
+    .card-container {
+      @include card-container;
+      background: mat-color($accent);
+      color: $background-color;
+
+      @media screen and (max-width: $break-small-min),
+      screen and (max-width: $break-small-max) {
+        max-width: 60vw;
+        margin-top: 3vh;
+      }
+
+      .task-buttons {
+        font-size: 3vw;
+        float: left;
+        color: $background-color;
+
+        .disabled {
+          color: mat-color($accent);
+        }
+      }
+
+      .tasks-completed-message {
+        text-align: center;
+        font-size: 1vw;
+
+        @media screen and (max-width: $break-small-min),
+        screen and (max-width: $break-small-max) {
+          font-size: 2vw;
+        }
+      }
+
+      .project-name {
+        @include responsive-text;
+      }
+
+      .task-description {
+        @include responsive-text;
+        margin-left: 1.2vw;
+      }
+
+      .task-edit-field {
+        text-decoration: underline;
+      }
+
+      .project-name-input {
+        padding: 10px 10px 10px 10px;
+      }
+
+      .created-time {
+        float: right;
+        font-size: calc(6px + .6vw);
+      }
+    }
+  }
+}

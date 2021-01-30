@@ -1,0 +1,43 @@
+@import '../list.component.scss';
+
+@mixin create-task-theme($theme) {
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .create-task-content {
+    background: mat-color($background);
+    color: $background-color;
+
+    .show-task-create-form {
+      display: flex;
+      justify-content: center;
+      color: mat-color($accent);
+    }
+
+    .card-container {
+      @include card-container;
+      background: mat-color($accent);
+      color: $background-color;
+
+      @media screen and (max-width: $break-small-min),
+      screen and (max-width: $break-small-max) {
+        max-width: 60vw;
+      }
+
+      .project-name,
+      .task-description {
+        @include responsive-text;
+        color: $background-color;
+      }
+
+      .task-description-input {
+        padding-left: 15px;
+      }
+
+      .create-task-actions {
+        margin-left: 15px;
+      }
+    }
+  }
+}
